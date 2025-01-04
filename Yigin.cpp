@@ -1,8 +1,3 @@
-﻿#include <iostream>
-#include <string>
-#define MAX
-using namespace std;
-
 #include <iostream>
 using namespace std;
 
