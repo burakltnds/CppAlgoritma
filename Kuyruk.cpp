@@ -30,7 +30,7 @@ public:
             cout << "Kuyruk Bos" << endl;
         }
         Node<T>* temp = bas;
-        bas = bas->next;    // Front pointer'ı bir sonraki node'a yönlendirilir
+        bas = bas->next;    
         if (!bas) {
             son = nullptr;
         }
