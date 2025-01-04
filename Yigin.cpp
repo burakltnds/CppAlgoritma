@@ -59,7 +59,7 @@ public:
         while (temp)
         {
             cout << temp->data << endl;
-            current = temp->sonra;
+            temp = temp->sonra;
         }
     }
 };
