@@ -1,80 +1,64 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+using namespace std;
 
-typedef struct Node {
-    int data;
-    struct Node* next;
-} Node;
+template <typename T>
+struct Node {
+    T data;  
+    Node* next;    
+    Node(T data):data(data),next(nullptr) {}
+};
 
-typedef struct Queue {
-    Node* bas;  
-    Node* son;  
-} Queue;
+template <typename T>
+class Queue {
+private:
+    Node<T>* bas;  
+    Node<T>* son;  
+public:
+    Queue() :bas(nullptr),son(nullptr){}
 
-void initialize(Queue* q) {
-    q->bas = NULL;
-    q->son = NULL;
-}
+    void enQueue(T value) {
+        Node<T>* yeni = new Node<T>(value);  
+        if (!son) { 
+            bas = son = yeni;
+        }
+            son->next = yeni;  
+            son = yeni;       
+    }   
 
-void enQueue(Queue* q, int value) {
-    Node* yeni = (Node*)malloc(sizeof(Node));
-    yeni->data = value;
-    yeni->next = NULL;
-
-    if (q->son == NULL) { 
-        q->bas = yeni;
-        q->son = yeni;
-        return;
+    void deQueue() {
+        if (!bas) {
+            cout << "Kuyruk Bos" << endl;
+        }
+        Node<T>* temp = bas;
+        bas = bas->next;    
+        if (!bas) {
+            son = nullptr;
+        }
+        delete temp;
     }
-    q->son->next = yeni; 
-    q->son = yeni;        
-}
-
-void deQueue(Queue* q) {
-    if (q->bas == NULL) {  
-        printf("Kuyruk Bos\n");
-        return;
+    void print() {
+        if (!bas) {
+            cout << "Kuyruk Bos" << endl;
+        }
+        Node<T>* temp = bas;
+        while (temp) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
     }
-
-    Node* temp = q->bas;   
-    q->bas = q->bas->next; 
-
-    if (q->bas == NULL) {  
-        q->son = NULL;
-    }
-
-    free(temp);
-}
-
-void printQueue(Queue* q) {
-    if (q->bas == NULL) {
-        printf("Kuyruk Bos\n");
-        return;
-    }
-
-    Node* temp = q->bas;
-    while (temp != NULL) {
-        printf("%d ", temp->data);
-        temp = temp->next;
-    }
-    printf("\n");
-}
+};
 
 int main() {
-    Queue q;
-    initialize(&q);
-
-    enQueue(&q, 5);
-    enQueue(&q, 3);
-    enQueue(&q, 65);
-    enQueue(&q, 20);
-
-    printf("Kuyruk: ");
-    printQueue(&q);
-
-    deQueue(&q);
-    printf("Dequeue Kuyruk: ");
-    printQueue(&q);
-
+    Queue<int> q;  
+    q.enQueue(5);
+    q.enQueue(3);
+    q.enQueue(65);
+    q.enQueue(20);
+    cout << "Kuyruk:";
+    q.print();
+    q.deQueue(); 
+    cout << "Dequeue Kuyruk:";
+    q.print();
     return 0;
 }
