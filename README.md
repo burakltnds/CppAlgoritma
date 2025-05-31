@@ -1,2 +1,2 @@
-# c-Algoritma
+# c++ Algoritma
 C++ dilinde Temel Algoritmalar
